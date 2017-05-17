@@ -128,7 +128,6 @@ function main() {
 	
 	if (pressed) {
 		var newAngle = mouseAngle() - dAngle;
-		DPC = rotation() - oldAngle;
 	} else {
 		newAngle = rotation() + DPC;
 		DPC *= 0.995;
