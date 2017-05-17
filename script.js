@@ -17,9 +17,9 @@ function init() {
 function readTouchPos(event) {
 	deadzone = Math.min(height, width) * 0.144 * 0.8;
 	
-	touches = [];
+	var touches = [];
 	for (var i = 0; i < event.touches.length; i++) {
-		var coords = [event.touches[0].clientX, event.touches[0].clientY];
+		var coords = [event.touches[i].clientX, event.touches[i].clientY];
 		var distance = Math.sqrt((coords[0] - middleX) ** 2 + (coords[1] - middleY) ** 2)
 		if (distance > deadzone) {
 			touches.push(coords);
