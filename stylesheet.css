@@ -3,8 +3,6 @@ body {
 	width: 100%;
     height: 100%;
 	margin: 0;
-	background: linear-gradient(315deg, #779FFA 0%, #01D3E8 50%, #55DCB0 100%);
-    background-attachment: fixed;
 }
 
 #container {
@@ -14,7 +12,8 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+	background: linear-gradient(315deg, #779FFA 0%, #01D3E8 50%, #55DCB0 100%);
+    background-attachment: fixed;
 }
 
 #spinner {
@@ -27,6 +26,7 @@ body {
 	position: fixed;
 	width: 100%;
 	height: 100%;
+	touch-action: none;
 }
 
 a {
