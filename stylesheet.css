@@ -12,14 +12,16 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background: #01D3E8;
 	background: linear-gradient(315deg, #779FFA 0%, #01D3E8 50%, #55DCB0 100%);
     background-attachment: fixed;
 }
 
 #spinner {
-	max-height: 70%;
-	max-width: 70%;
+	max-height: 80%;
+	max-width: 80%;
 	transform: rotate(0deg);
+	position: fixed;
 }
 
 #touchScreen {

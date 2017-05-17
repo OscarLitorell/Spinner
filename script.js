@@ -15,7 +15,7 @@ function init() {
 
 
 function readTouchPos(event) {
-	deadzone = Math.min(height, width) * 0.144 * 0.70;
+	deadzone = Math.min(height, width) * 0.144 * 0.8;
 	
 	touches = [];
 	for (var i = 0; i < event.touches.length; i++) {
