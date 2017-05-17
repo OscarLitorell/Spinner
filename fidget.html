@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Fidget spinner</title>
+		<link href="stylesheet.css" type="text/css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<script src="script.js"></script>
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+	</head>
+	
+		
+	<body onload="init()">
+		
+		<div id="container">
+			<img src="spinner.png" id="spinner"></img>
+		</div>
+		
+		<div id="touchScreen" onmousedown="mouseDown()" ontouchstart="touchDown(event)"
+		onmouseup="mouseRelease()" ontouchend="mouseRelease()"
+		onmousemove="mouseMove(event)" ontouchmove="touchMove(event)">
+		</div>
+		
+		<a href="https://oscarlitorell.github.io">Made by Oscar Litorell</a>
+	</body>
+</html>
