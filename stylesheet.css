@@ -32,6 +32,21 @@ body {
 	position: fixed;
 }
 
+#blurSpinner {
+	max-height: 85%;
+	max-width: 85%;
+	transform: rotate(0deg);
+	position: fixed;
+}
+
+#topSpinner {
+	max-height: 85%;
+	max-width: 85%;
+	transform: rotate(0deg);
+	position: fixed;
+}
+
+
 #touchScreen {
 	position: fixed;
 	width: 100%;
