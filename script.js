@@ -13,6 +13,9 @@
 */
 
 
+
+// This functions runs once the page loads.
+// It declares all varables, and calls the main loop 100 times per second.
 function init() {
 	oldAngle = 0;
 	pressed = false;
@@ -22,22 +25,32 @@ function init() {
 	lastRotation = 0;
 	middleX = 0;
 	middleY = 0;
-	setInterval(main, 10);
+	hue = Math.round(Math.random() * 360);
 	
+	setInterval(main, 10);
 };
 
 
+// This function reads all the points where the user touches the screen, and returns the average of the points that aren't
+// on the stationary part of the spinner.
 function readTouchPos(event) {
-	deadzone = Math.min(height, width) * 0.144 * 0.85;
+	deadzone = Math.min(height, width) * 0.144 * 0.85;	//This declares the radius of the stationary part of the spinner.
 	
+	
+	// This section pushes all touching points, except for the ones within the radius we calculated earlier from the middle of the screen,
+	// to an array called 'touches'.
 	var touches = [];
 	for (var i = 0; i < event.touches.length; i++) {
 		var coords = [event.touches[i].clientX, event.touches[i].clientY];
-		var distance = Math.sqrt((coords[0] - middleX) ** 2 + (coords[1] - middleY) ** 2)
+		var distance = Math.sqrt((coords[0] - middleX) ** 2 + (coords[1] - middleY) ** 2);
 		if (distance > deadzone) {
 			touches.push(coords);
 		};
 	};
+	
+	// This section calculates the average coordinates of the touching points and returns the value,
+	// and if there are no touching points (or the only point is on the stationary part of the spinner)
+	// it returns a false value.
 	var totalX = 0;
 	var totalY = 0;
 	for (var i = 0; i < touches.length; i++) {
@@ -54,6 +67,7 @@ function readTouchPos(event) {
 };
 
 
+// This function runs each time the user touches the screen at a new coordinate.
 function touchDown(event) {
 	var pos = readTouchPos(event);
 	
@@ -66,7 +80,7 @@ function touchDown(event) {
 	};
 };
 
-
+// This function runs each time the user presses a mouse button down.
 function mouseDown() {
 	pressed = true;
 	lastRotation = rotation();
@@ -74,9 +88,11 @@ function mouseDown() {
 };
 
 
+
+// This function reads the angle that the spinner is rotated to at the moment.
+// Credit for this function goes to Chris Coyier:
+// https://css-tricks.com/get-value-of-css-rotation-through-javascript/
 function rotation() {
-	// Credit for this function goes to Chris Coyier:
-	// https://css-tricks.com/get-value-of-css-rotation-through-javascript/
 	tr = window.getComputedStyle(document.getElementById("spinner")).getPropertyValue("transform");
 	var values = tr.split('(')[1];
     values = values.split(')')[0];
@@ -87,6 +103,7 @@ function rotation() {
 };
 
 
+// This function calculates the angle between where the cursor is and the middle of the screen. 
 function mouseAngle() {
 	dX = mouseX - middleX;
 	dY = 0 - (mouseY - middleY);
@@ -105,12 +122,13 @@ function mouseAngle() {
 	return angle;
 };
 
-
+// This function runs each time the user moves the mouse.
 function mouseMove(event) {
     mouseX = event.clientX;
     mouseY = event.clientY;
 };
 
+// This function runs each time the user moves a point of touch.
 function touchMove(event) {
 	var pos = readTouchPos(event);
 	
@@ -120,19 +138,22 @@ function touchMove(event) {
 	};
 };
 
+// This function runs each time the user releases a mouse button.
 function mouseRelease() {
 	pressed = false;
 };
 
-
+// This function is the main loop of the program.
 function main() {
+	// Window width
 	width = window.getComputedStyle(document.getElementById("touchScreen")).getPropertyValue("width");
 	width = width.slice(0, width.length - 2);
 	
+	// Window height
 	height = window.getComputedStyle(document.getElementById("touchScreen")).getPropertyValue("height");
 	height = height.slice(0, height.length - 2);
 	
-	
+	// Middle of the window
 	middleY = Math.round(height / 2);
 	middleX = Math.round(width / 2);
 
@@ -140,9 +161,12 @@ function main() {
 	
 	
 	if (pressed) {
+		// Rotates the spinner accordingly when the user is controlling it.
 		var newAngle = mouseAngle() - dAngle;
 		DPC = rotation() - oldAngle;
+		
 	} else {
+		// Lets the spinner coast down if the user releases it.
 		newAngle = rotation() + DPC;
 		DPC *= 0.998;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
@@ -152,6 +176,23 @@ function main() {
 	
 	oldAngle = rotation();
 	document.getElementById("spinner").style.transform = "rotate(" + newAngle + "deg)";
+	
+	
+	// Changes the background colour after how the spinner has spun.
+	cornerAngle = 360 - Math.atan(width / height) / Math.PI * 180;
+	hue = (hue + DPC * 0.03) % 360;
+	document.getElementById("container").style.background ="linear-gradient(" + cornerAngle + "deg, hsl(" + (hue + 40) + ", 70%, 50%), hsl(" + hue + ", 70%, 60%), hsl(" + (hue - 40) + ", 70%, 70%))";
+	
+	
+	// Makes the spinner look blurry at high speed.
+	var speed = (Math.abs(DPC) - 7) / 10;
+	if (speed > 1) {
+		speed = 1;
+	} else if (speed < 0) {
+		speed = 0;
+	};
+	document.getElementById("spinner").style.opacity = 1 - speed * 0.9;
+	document.getElementById("blurSpinner").style.opacity = speed;
 };
 
 

@@ -19,12 +19,13 @@ body {
 	-webkit-justify-content: center;
 	
 	background: #01D3E8;
-	background: -webkit-linear-gradient(315deg, #779FFA 0%, #01D3E8 50%, #55DCB0 100%);
-	background: linear-gradient(315deg, #779FFA 0%, #01D3E8 50%, #55DCB0 100%);
+	background: -webkit-linear-gradient(315deg, hsl(160, 80%, 60%), hsl(185, 80%, 60%), hsl(200, 80%, 60%));
+	background: linear-gradient(315deg, hsl(160, 80%, 60%), hsl(185, 80%, 60%), hsl(200, 80%, 60%));
+	
     background-attachment: fixed;
 }
 
-#spinner {
+#spinner, #blurSpinner, #topSpinner {
 	max-height: 85%;
 	max-width: 85%;
 	transform: rotate(0deg);
