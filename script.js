@@ -144,7 +144,7 @@ function main() {
 		DPC = rotation() - oldAngle;
 	} else {
 		newAngle = rotation() + DPC;
-		DPC *= 0.995;
+		DPC *= 0.998;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
 			DPC = 0;
 		};
