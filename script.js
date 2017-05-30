@@ -26,7 +26,7 @@ function init() {
 	middleX = 0;
 	middleY = 0;
 	hue = Math.round(Math.random() * 360);
-	
+		
 	setInterval(main, 10);
 };
 
@@ -42,7 +42,7 @@ function readTouchPos(event) {
 	var touches = [];
 	for (var i = 0; i < event.touches.length; i++) {
 		var coords = [event.touches[i].clientX, event.touches[i].clientY];
-		var distance = Math.sqrt((coords[0] - middleX) ** 2 + (coords[1] - middleY) ** 2);
+		var distance = Math.sqrt(Math.pow((coords[0] - middleX), 2) + Math.pow((coords[1] - middleY), 2));
 		if (distance > deadzone) {
 			touches.push(coords);
 		};
@@ -156,6 +156,18 @@ function main() {
 	// Middle of the window
 	middleY = Math.round(height / 2);
 	middleX = Math.round(width / 2);
+	
+	var spinnerRadius = window.getComputedStyle(document.getElementById("spinner")).getPropertyValue("width");
+	
+	spinnerRadius = spinnerRadius.slice(0, spinnerRadius.length - 2) * 0.5;
+	
+	
+	document.getElementById("spinner").style.top = (middleY - spinnerRadius) + "px";
+	document.getElementById("spinner").style.left = (middleX - spinnerRadius) + "px";
+	document.getElementById("blurSpinner").style.top = (middleY - spinnerRadius) + "px";
+	document.getElementById("blurSpinner").style.left = (middleX - spinnerRadius) + "px";
+	document.getElementById("topSpinner").style.top = (middleY - spinnerRadius) + "px";
+	document.getElementById("topSpinner").style.left = (middleX - spinnerRadius) + "px";
 
 	
 	
@@ -186,11 +198,10 @@ function main() {
 	
 	// Makes the spinner look blurry at high speed.
 	var speed = (Math.abs(DPC) - 7) / 10;
-	if (speed > 1) {
-		speed = 1;
-	} else if (speed < 0) {
-		speed = 0;
-	};
+	
+	speed = Math.max(0, speed);
+	speed = Math.min(1, speed);	
+	
 	document.getElementById("spinner").style.opacity = 1 - speed * 0.9;
 	document.getElementById("blurSpinner").style.opacity = speed;
 };
