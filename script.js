@@ -22,10 +22,12 @@ function init() {
 	mouseX = 0;
 	mouseY = 0;
 	DPC = 0;
+	lastDPC = 0;
 	lastRotation = 0;
 	middleX = 0;
 	middleY = 0;
 	hue = Math.round(Math.random() * 360);
+	
 		
 	setInterval(main, 10);
 };
@@ -171,20 +173,23 @@ function main() {
 
 	
 	
-	
 	if (pressed) {
 		// Rotates the spinner accordingly when the user is controlling it.
 		var newAngle = mouseAngle() - dAngle;
 		DPC = rotation() - oldAngle;
-		
+		lastDPC = DPC * 0.5 + lastDPC * 0.5;
 	} else {
 		// Lets the spinner coast down if the user releases it.
+		DPC = lastDPC;
 		newAngle = rotation() + DPC;
 		DPC *= 0.998;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
 			DPC = 0;
 		};
+		lastDPC = DPC;
 	};
+	
+	console.log(DPC + " " + lastDPC);
 	
 	oldAngle = rotation();
 	document.getElementById("spinner").style.transform = "rotate(" + newAngle + "deg)";
@@ -204,6 +209,7 @@ function main() {
 	
 	document.getElementById("spinner").style.opacity = 1 - speed * 0.9;
 	document.getElementById("blurSpinner").style.opacity = speed;
+	
 };
 
 
