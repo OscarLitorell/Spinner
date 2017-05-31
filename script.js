@@ -182,7 +182,7 @@ function main() {
 		// Lets the spinner coast down if the user releases it.
 		DPC = lastDPC;
 		newAngle = rotation() + DPC;
-		DPC *= 0.996;
+		DPC *= 0.997;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
 			DPC = 0;
 		};
