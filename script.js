@@ -29,7 +29,7 @@ function init() {
 	hue = Math.round(Math.random() * 360);
 	
 		
-	setInterval(main, 10);
+	setInterval(main, 1000/60);
 };
 
 
@@ -182,7 +182,7 @@ function main() {
 		// Lets the spinner coast down if the user releases it.
 		DPC = lastDPC;
 		newAngle = rotation() + DPC;
-		DPC *= 0.998;
+		DPC *= 0.996;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
 			DPC = 0;
 		};
