@@ -159,6 +159,8 @@ function main() {
 	middleY = Math.round(height / 2);
 	middleX = Math.round(width / 2);
 	
+	angularDrag = 0.999;
+	
 	var spinnerRadius = window.getComputedStyle(document.getElementById("spinner")).getPropertyValue("width");
 	
 	spinnerRadius = spinnerRadius.slice(0, spinnerRadius.length - 2) * 0.5;
@@ -182,14 +184,12 @@ function main() {
 		// Lets the spinner coast down if the user releases it.
 		DPC = lastDPC;
 		newAngle = rotation() + DPC;
-		DPC *= 0.997;
+		DPC *= angularDrag;
 		if (Math.abs(DPC) < 0.1 && DPC != 0) {
 			DPC = 0;
 		};
 		lastDPC = DPC;
 	};
-	
-	console.log(DPC + " " + lastDPC);
 	
 	oldAngle = rotation();
 	document.getElementById("spinner").style.transform = "rotate(" + newAngle + "deg)";
